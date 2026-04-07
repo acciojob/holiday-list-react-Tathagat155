@@ -1,9 +1,11 @@
 
 import React, { useState, useEffect } from "react";
 import './../styles/App.css';
-
 const App = () => {
-    const cityList = [{ name: 'Goa', country: 'India' },
+  const [data,setData]=useState([])
+  
+ const cityList =useMemo(()=> [
+    { name: 'Goa', country: 'India' },
     { name: 'Amsterdam', country: 'Netherlands' },
     { name: 'New York', country: 'USA' },
     { name: 'Darjeeling', country: 'India' },
@@ -32,10 +34,23 @@ const App = () => {
     { name: 'Mount Abu', country: 'India' },
     { name: 'Tirupati', country: 'India' },
     ]
+   ,[]);
+
+    useEffect(()=>{
+      const sortCityList=cityList.filter((list)=>list.country=='India') 
+      setData(sortCityList);
+    },[cityList]);
     
   return (
     <div id="main">
-               {/* Do not remove the main div */}
+       <ol>
+      {data.map((list,index)=>{
+           return (
+           <li key={'location'+index+1}>{list.name}</li>
+           )
+          } 
+      )}
+      </ol>
     </div>
   )
 }
